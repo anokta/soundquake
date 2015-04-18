@@ -128,7 +128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   noiseMakerPrefab: {fileID: 191526, guid: dbba4ed0915246647831c62e9a90f855, type: 2}
   frequency: 44100
-  maxSeconds: 6
+  maxSeconds: 4
 --- !u!1 &240111616
 GameObject:
   m_ObjectHideFlags: 0

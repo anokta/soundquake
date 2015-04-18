@@ -8,8 +8,9 @@ public class NoiseManager : MonoBehaviour
 
     // Max recording size in seconds.
     public int frequency = 44100;
-    public int maxSeconds = 6;
+    public int maxSeconds = 4;
     float startTime;
+    bool recording;
 
     // Lastly created noise maker.
     NoiseMaker current;
@@ -26,14 +27,14 @@ public class NoiseManager : MonoBehaviour
             Application.Quit();
         }
 
-        if (!Microphone.IsRecording(null))
+        if (!recording)
         {
             // Start recording.
             if (Input.GetMouseButtonDown(0))
             {
+                recording = true;
                 startTime = Time.time;
                 current = GameObject.Instantiate(noiseMakerPrefab).GetComponent<NoiseMaker>();
-                current.GetComponent<Renderer>().material.color = Color.red * Random.Range(0.5f, 1.0f);
                 current.audioSource.clip = Microphone.Start(null, false, maxSeconds, frequency);
                 current.gameObject.SetActive(false);
             }
@@ -50,7 +51,7 @@ public class NoiseManager : MonoBehaviour
         else  // is recording
         {
             // Finish recording and start the playback.
-            if (Input.GetMouseButtonUp(0))
+            if (Input.GetMouseButtonUp(0) || !Microphone.IsRecording(null))
             {
                 Microphone.End(null);
                 int recordSamples = (int)((Time.time - startTime) * frequency);
@@ -58,6 +59,7 @@ public class NoiseManager : MonoBehaviour
                 current.audioSource.clip.GetData(recordData, 0);
                 current.audioSource.clip = AudioClip.Create("Noise", recordSamples, 1, frequency, false);
                 current.audioSource.clip.SetData(recordData, 0);
+                recording = false; 
 
                 Vector3 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 position.z = 0.0f;
@@ -69,6 +71,7 @@ public class NoiseManager : MonoBehaviour
             else if (Input.GetMouseButtonUp(1))
             {
                 Microphone.End(null);
+                recording = false; 
 
                 GameObject.Destroy(current.gameObject);
             }
