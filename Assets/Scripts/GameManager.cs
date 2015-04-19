@@ -56,15 +56,8 @@ public class GameManager : MonoBehaviour
         {
             GameEventManager.TriggerGameQuit();
         }
-        // Start the game if Space pressed.
-        if (GameEventManager.CurrentState == GameEventManager.GameState.InMenu)
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                GameEventManager.TriggerGameStart();
-            }
-        }
-        else
+
+        if (GameEventManager.CurrentState != GameEventManager.GameState.InMenu)
         {
             if (levelTransform.position.y != targetLevelY)
             {
