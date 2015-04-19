@@ -14,6 +14,7 @@ GameObject:
   - 82: {fileID: 8206348}
   - 114: {fileID: 11478454}
   - 54: {fileID: 5498246}
+  - 120: {fileID: 12005596}
   m_Layer: 0
   m_Name: NoiseMaker
   m_TagString: Untagged
@@ -107,26 +108,36 @@ AudioSource:
   Loop: 1
   Mute: 0
   Priority: 128
-  DopplerLevel: 1
+  DopplerLevel: 2
   MinDistance: 10
-  MaxDistance: 100
+  MaxDistance: 25
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
   rolloffCustomCurve:
     serializedVersion: 2
     m_Curve:
-    - time: 0
+    - time: .400000006
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: -2.50099587
+      outSlope: -2.50099587
+      tangentMode: 0
+    - time: .568723977
+      value: .478321999
+      inSlope: -8.10058594
+      outSlope: -8.10058594
+      tangentMode: 0
+    - time: .693536639
+      value: .0330438055
+      inSlope: -.373510569
+      outSlope: -.373510569
       tangentMode: 0
     - time: 1
       value: 0
-      inSlope: 0
-      outSlope: 0
+      inSlope: -.400159508
+      outSlope: -.400159508
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -172,6 +183,43 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 0}
+--- !u!120 &12005596
+LineRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 191526}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_Materials:
+  - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 1
+  m_ReflectionProbeUsage: 1
+  m_ProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_ImportantGI: 0
+  m_AutoUVMaxDistance: .5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_Positions:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 1}
+  m_Parameters:
+    startWidth: 1
+    endWidth: 1
+    m_StartColor:
+      serializedVersion: 2
+      rgba: 4278585003
+    m_EndColor:
+      serializedVersion: 2
+      rgba: 4289134639
+  m_UseWorldSpace: 1
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

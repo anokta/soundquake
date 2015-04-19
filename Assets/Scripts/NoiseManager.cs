@@ -1,4 +1,11 @@
-﻿using UnityEngine;
+﻿// ----------------------------------------------------------------------
+//   soundquake - Ludum Dare 32 Compo Entry
+//
+//     Copyright 2015 Alper Gungormusler. All rights reserved.
+//
+// -----------------------------------------------------------------------
+
+using UnityEngine;
 using System.Collections;
 
 public class NoiseManager : MonoBehaviour
@@ -6,27 +13,19 @@ public class NoiseManager : MonoBehaviour
     // Noise maker prefab.
     public GameObject noiseMakerPrefab;
 
+    [HideInInspector]
+    public bool recording;
+
     // Max recording size in seconds.
     public int frequency = 44100;
     public int maxSeconds = 4;
     float startTime;
-    bool recording;
 
     // Lastly created noise maker.
     NoiseMaker current;
 
-    void Start()
-    {
-
-    }
-
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Application.Quit();
-        }
-
         if (!recording)
         {
             // Start recording.
@@ -35,6 +34,7 @@ public class NoiseManager : MonoBehaviour
                 recording = true;
                 startTime = Time.time;
                 current = GameObject.Instantiate(noiseMakerPrefab).GetComponent<NoiseMaker>();
+                current.transform.parent = GameManager.levelTransform;
                 current.audioSource.clip = Microphone.Start(null, false, maxSeconds, frequency);
                 current.gameObject.SetActive(false);
             }
@@ -62,6 +62,7 @@ public class NoiseManager : MonoBehaviour
                 recording = false; 
 
                 Vector3 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                position.y = Mathf.Max(-current.transform.localScale.y, position.y);
                 position.z = 0.0f;
                 current.transform.position = position;
                 current.gameObject.SetActive(true);
