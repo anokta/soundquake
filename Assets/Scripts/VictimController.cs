@@ -49,7 +49,7 @@ public class VictimController : MonoBehaviour
         }
 
         // Update the noise sfx.
-        targetVolume = (GameManager.level == 1 && Mathf.Abs(GameManager.levelTransform.position.y) > 1.0f) ?
+        targetVolume = (GameManager.level > 0 && Mathf.Abs(GameManager.levelTransform.position.y) > 1.0f) ?
             maxVolume :
             Mathf.Min(maxVolume, 0.1f * rigid.velocity.magnitude);
         audioSource.volume = Mathf.Lerp(audioSource.volume, targetVolume, 4.0f * Time.deltaTime);

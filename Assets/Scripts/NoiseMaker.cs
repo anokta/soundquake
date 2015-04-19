@@ -25,7 +25,7 @@ public class NoiseMaker : MonoBehaviour
 
     void Update()
     {
-        GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-0.25f, 0.25f), 1.0f, 0.0f) * Mathf.Min(transform.position.y > -0.5f ? 7.5f : 20.0f, averageForce * 110.0f));
+        GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-0.25f, 0.25f), 1.0f, 0.0f) * Mathf.Min(Physics.Raycast(transform.position, Vector3.down, 1.0f) ? 20.0f : 7.5f, averageForce * 110.0f));
 
         lastForceMagnitude = Mathf.Lerp(lastForceMagnitude, averageForce, Time.deltaTime * 10.0f);
         GetComponent<Renderer>().material.color = new Color(1.0f, 0.25f, 0.25f) * Mathf.Max(0.25f, 25.0f * lastForceMagnitude);
