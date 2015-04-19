@@ -80,6 +80,7 @@ public class GuiManager : MonoBehaviour
     void GameMenu()
     {
         targetAlphaMenu = 1.0f;
+        targetAlphaLevel = 0.0f;
     }
 
     void GameStart()

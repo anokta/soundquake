@@ -54,10 +54,10 @@ public static class GameEventManager
 
     public static void TriggerGameQuit()
     {
-        //if (GameQuit != null)
-        //{
-        //    GameQuit();
-        //}
+        if (GameQuit != null)
+        {
+            GameQuit();
+        }
 
         Debug.Log("Quiting . . .");
 

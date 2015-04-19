@@ -9,6 +9,7 @@ using UnityEngine;
 using System.Collections;
 
 public class CameraShaker : MonoBehaviour {
+
     float targetRotationAngle = 0.0f;
 
     void OnEnable()
@@ -25,13 +26,14 @@ public class CameraShaker : MonoBehaviour {
         float totalForce = 0.0f;
         foreach (NoiseMaker noiseMaker in FindObjectsOfType<NoiseMaker>())
         {
-            totalForce += noiseMaker.averageForce;
+            totalForce += noiseMaker.GetForceMagnitude();
         }
         targetRotationAngle = totalForce;
 
+        // Shake the camera with respect to the total amplitude.
         Camera.main.transform.rotation =
-           Quaternion.Slerp(Camera.main.transform.rotation, Quaternion.AngleAxis(targetRotationAngle * Random.Range(-60.0f, 60.0f),
-                    Vector3.forward), 2.0f * Time.deltaTime);
+           Quaternion.Slerp(Camera.main.transform.rotation, 
+                            Quaternion.AngleAxis(targetRotationAngle * Random.Range(-60.0f, 60.0f), Vector3.forward), 2.0f * Time.deltaTime);
 	}
 
     void GameStart()

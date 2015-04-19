@@ -10,10 +10,8 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
-
     public static int level = 0;
     public static Transform levelTransform;
-    float targetLevelY = 0.0f;
 
     public GameObject groundPrefab;
     public GameObject victimPrefab;
@@ -21,7 +19,8 @@ public class GameManager : MonoBehaviour
     NoiseManager noiseManager;
     VictimController victimController;
 
-    float yThreshold = -5.0f;
+    float targetLevelY;
+    float yThreshold;
 
     void Awake()
     {
@@ -51,9 +50,9 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        // Quit the game if ESC pressed.
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            // Quit the game if ESC pressed.
             GameEventManager.TriggerGameQuit();
         }
 
@@ -85,25 +84,20 @@ public class GameManager : MonoBehaviour
     void GameMenu()
     {
         noiseManager.enabled = false;
-        Microphone.End(null);
-        noiseManager.recording = false;
 
         // Create the victim.
         victimController = GameObject.Instantiate(victimPrefab).GetComponent<VictimController>();
-        victimController.gameObject.SetActive(false);
+        victimController.GetComponent<Renderer>().enabled = false;
     }
 
     void GameStart()
     {
-        level++;
-        InitLevel(level);
+        InitLevel(++level);
     }
 
     void GameOver()
     {
         noiseManager.enabled = false;
-        Microphone.End(null);
-        noiseManager.recording = false;
 
         targetLevelY = 20.0f;
     }
@@ -129,34 +123,34 @@ public class GameManager : MonoBehaviour
 
         // Create the ground floor.
         Transform groundLeft = GameObject.Instantiate(groundPrefab).transform;
-        groundLeft.localPosition = new Vector3(left + (middle - left) / 2.0f, groundPrefab.transform.position.y, 0.0f);
+        groundLeft.localPosition = new Vector3(left + 0.5f * (middle - left), groundPrefab.transform.position.y, 0.0f);
         groundLeft.localScale = new Vector3(middle - left, groundPrefab.transform.localScale.y, 1.0f);
         groundLeft.parent = levelTransform;
         Transform groundRight = GameObject.Instantiate(groundPrefab).transform;
-        groundRight.localPosition = new Vector3(middle + 1.0f + (right - middle - 1.0f) / 2.0f, groundPrefab.transform.position.y, 0.0f);
+        groundRight.localPosition = new Vector3(middle + 1.0f + 0.5f * (right - middle - 1.0f), groundPrefab.transform.position.y, 0.0f);
         groundRight.localScale = new Vector3(right - middle - 1.0f, groundPrefab.transform.localScale.y, 1.0f);
         groundRight.parent = levelTransform;
         // Create borders, so the victim cannot escape! :)
         Transform borderLeft = GameObject.Instantiate(groundPrefab).transform;
         borderLeft.localPosition = new Vector3(left - 0.5f * borderLeft.localScale.x, 0.0f, 0.0f);
-        borderLeft.localScale = new Vector3(borderLeft.localScale.x, 50.0f, 1.0f);
+        borderLeft.localScale = new Vector3(borderLeft.localScale.x, 15.0f, 1.0f);
         borderLeft.parent = levelTransform;
         Transform borderRight = GameObject.Instantiate(groundPrefab).transform;
         borderRight.localPosition = new Vector3(right + 0.5f * borderRight.localScale.x, 0.0f, 0.0f);
-        borderRight.localScale = new Vector3(borderRight.localScale.x, 50.0f, 1.0f);
+        borderRight.localScale = new Vector3(borderRight.localScale.x, 15.0f, 1.0f);
         borderRight.parent = levelTransform;
 
         // Start the level empty.
         levelTransform.position = new Vector3(0.0f, down - 0.5f * levelTransform.localScale.y, 0.0f);
         yThreshold = 0.5f * down;
 
+        // Reset the Victim.
+        victimController.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        victimController.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+        victimController.transform.position = new Vector3(victimController.transform.position.x, up + 0.5f * victimController.transform.localScale.y, 0.0f);
+        victimController.GetComponent<Renderer>().enabled = true;
+
         // Enable noise maker generation.
         noiseManager.enabled = true;
-
-        // Reset the Victim.
-        victimController.gameObject.SetActive(true);
-        victimController.rigid.velocity = Vector3.zero;
-        victimController.rigid.angularVelocity = Vector3.zero;
-        victimController.transform.position = new Vector3(victimController.transform.position.x, up + 0.5f * victimController.transform.localScale.y, 0.0f);
     }
 }

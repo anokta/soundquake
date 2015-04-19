@@ -10,27 +10,31 @@ using System.Collections;
 
 public class NoiseManager : MonoBehaviour
 {
-    // Noise maker prefab.
     public GameObject noiseMakerPrefab;
-
-    [HideInInspector]
-    public bool recording;
-
-    // Max recording size in seconds.
+    
+    // Recording properties.
     public int frequency = 44100;
     public int maxSeconds = 4;
+    
     float startTime;
+    bool recording;
 
     // Lastly created noise maker.
     NoiseMaker current;
+
+    void OnDisable()
+    {
+        recording = false;
+        Microphone.End(null);
+    }
 
     void Update()
     {
         if (!recording)
         {
-            // Start recording.
             if (Input.GetMouseButtonDown(0) && FindObjectsOfType<NoiseMaker>().Length < 32)
             {
+                // Start recording.
                 recording = true;
                 startTime = Time.time;
                 current = GameObject.Instantiate(noiseMakerPrefab).GetComponent<NoiseMaker>();
@@ -38,9 +42,9 @@ public class NoiseManager : MonoBehaviour
                 current.audioSource.clip = Microphone.Start(null, false, maxSeconds, frequency);
                 current.gameObject.SetActive(false);
             }
-            // Delete the clicked recording.
             if (Input.GetMouseButtonUp(1))
             {
+                // Delete the clicked noise maker.
                 RaycastHit[] hits = Physics.RaycastAll(Camera.main.ScreenPointToRay(Input.mousePosition));
                 if (hits.Length > 0 && hits[0].transform.tag == "NoiseMaker")
                 {
@@ -50,9 +54,9 @@ public class NoiseManager : MonoBehaviour
         }
         else  // is recording
         {
-            // Finish recording and start the playback.
             if (Input.GetMouseButtonUp(0) || !Microphone.IsRecording(null))
             {
+                // Finish recording and start the playback.
                 Microphone.End(null);
                 int recordSamples = (int)((Time.time - startTime) * frequency);
                 float[] recordData = new float[recordSamples];
@@ -61,16 +65,15 @@ public class NoiseManager : MonoBehaviour
                 current.audioSource.clip.SetData(recordData, 0);
                 recording = false; 
 
+                // Spawn the noise maker.
                 Vector3 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                position.y = Mathf.Max(-current.transform.localScale.y, position.y);
-                position.z = 0.0f;
-                current.transform.position = position;
+                current.transform.position = new Vector3(position.x, Mathf.Max(-current.transform.localScale.y, position.y), 0.0f);
                 current.gameObject.SetActive(true);
                 current.audioSource.Play();
             }
-            // Stop (cancel) recording.
             else if (Input.GetMouseButtonUp(1))
             {
+                // Stop (cancel) recording.
                 Microphone.End(null);
                 recording = false; 
 
