@@ -27,7 +27,7 @@ public class NoiseMaker : MonoBehaviour
         GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-0.25f, 0.25f), 1.0f, 0.0f) * averageForce * 100);
 
         lastForce = Mathf.Lerp(lastForce, averageForce, Time.deltaTime * 10.0f);
-        GetComponent<Renderer>().material.color = Color.red * Mathf.Max(0.2f, 10.0f * lastForce);
+        GetComponent<Renderer>().material.color = Color.red * Mathf.Max(0.4f, 12.0f * lastForce);
     }
 
     void OnAudioFilterRead(float[] data, int length)

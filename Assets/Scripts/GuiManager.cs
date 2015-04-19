@@ -11,25 +11,29 @@ using System.Collections;
 
 public class GuiManager : MonoBehaviour
 {
-    public Text title, click;
+    public Text title, click, level;
 
     float currentAlphaMenu, targetAlphaMenu;
+    float currentAlphaLevel, targetAlphaLevel;
 
     void OnEnable()
     {
         GameEventManager.GameMenu += GameMenu;
         GameEventManager.GameStart += GameStart;
+        GameEventManager.GameOver += GameOver;
     }
 
     void OnDisable()
     {
         GameEventManager.GameMenu -= GameMenu;
         GameEventManager.GameStart -= GameStart;
+        GameEventManager.GameOver -= GameOver;
     }
 
     void Awake()
     {
         currentAlphaMenu = targetAlphaMenu = 0.0f;
+        currentAlphaLevel = targetAlphaLevel = 0.0f;
     }
 
     void Update()
@@ -38,8 +42,14 @@ public class GuiManager : MonoBehaviour
         {
             currentAlphaMenu = Mathf.Lerp(currentAlphaMenu, targetAlphaMenu, 4.0f * Time.deltaTime);
         }
+        if (currentAlphaLevel != targetAlphaLevel)
+        {
+            currentAlphaLevel = Mathf.Lerp(currentAlphaLevel, targetAlphaLevel, 2.0f * Time.deltaTime);
+        }
 
-        Color c = title.color;
+        Color c;
+
+        c = title.color;
         c.a = currentAlphaMenu;
         title.color = c;
 
@@ -56,6 +66,10 @@ public class GuiManager : MonoBehaviour
                 GameEventManager.TriggerGameStart();
             }
         }
+
+            c = level.color;
+            c.a = currentAlphaLevel;
+            level.color = c;
     }
 
     void GameMenu()
@@ -66,5 +80,14 @@ public class GuiManager : MonoBehaviour
     void GameStart()
     {
         targetAlphaMenu = 0.0f;
+        targetAlphaLevel = 0.0f;
+
+        level.text = "floor " + (1 - GameManager.level);
+    }
+
+    void GameOver()
+    {
+        currentAlphaLevel = 0.25f;
+        targetAlphaLevel = 1.0f;
     }
 }
