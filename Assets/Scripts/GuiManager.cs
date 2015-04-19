@@ -16,6 +16,8 @@ public class GuiManager : MonoBehaviour
     float currentAlphaMenu, targetAlphaMenu;
     float currentAlphaLevel, targetAlphaLevel;
 
+    bool clicked;
+
     void OnEnable()
     {
         GameEventManager.GameMenu += GameMenu;
@@ -68,11 +70,19 @@ public class GuiManager : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 click.fontStyle = FontStyle.Bold;
+                clicked = true;
             }
-            if (Input.GetMouseButtonUp(0))
+            else if (Input.GetMouseButtonUp(0))
             {
-                click.enabled = false;
-                GameEventManager.TriggerGameStart();
+                if (clicked)
+                {
+                    click.enabled = false;
+                    GameEventManager.TriggerGameStart();
+                }
+                else
+                {
+                    click.fontStyle = FontStyle.Normal;
+                }
             }
         }
     }
@@ -81,6 +91,8 @@ public class GuiManager : MonoBehaviour
     {
         targetAlphaMenu = 1.0f;
         targetAlphaLevel = 0.0f;
+
+        clicked = false;
     }
 
     void GameStart()

@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         noiseManager = GetComponent<NoiseManager>();
+        noiseManager.enabled = false;
     }
 
     void OnEnable()
@@ -43,10 +44,30 @@ public class GameManager : MonoBehaviour
         GameEventManager.GameQuit -= GameQuit;
     }
 
+#if UNITY_WEBPLAYER
+    void Start()
+    {
+        StartCoroutine(Init());
+    }
+
+    IEnumerator Init()
+    {
+        yield return Application.RequestUserAuthorization(UserAuthorization.Microphone);
+        if (Application.HasUserAuthorization(UserAuthorization.Microphone))
+        {
+            GameEventManager.TriggerGameMenu();
+        }
+        else
+        {
+            GameEventManager.TriggerGameQuit();
+        }
+    }
+#else
     void Start()
     {
         GameEventManager.TriggerGameMenu();
     }
+#endif
 
     void Update()
     {
