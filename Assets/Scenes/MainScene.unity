@@ -459,6 +459,7 @@ GameObject:
   - 81: {fileID: 941382681}
   - 114: {fileID: 941382686}
   - 114: {fileID: 941382688}
+  - 114: {fileID: 941382690}
   - 114: {fileID: 941382687}
   - 114: {fileID: 941382689}
   m_Layer: 0
@@ -561,7 +562,7 @@ MonoBehaviour:
   sepBlurSpread: .100000001
   quality: 0
   bloomIntensity: 5
-  bloomThreshold: .5
+  bloomThreshold: .75
   bloomThresholdColor: {r: 1, g: 1, b: 1, a: 1}
   bloomBlurIterations: 1
   hollywoodFlareBlurIterations: 2
@@ -613,8 +614,8 @@ MonoBehaviour:
   hdr: 0
   sepBlurSpread: .100000001
   useSrcAlphaAsMask: 0
-  bloomIntensity: 1
-  bloomThreshold: 1.34000003
+  bloomIntensity: 4
+  bloomThreshold: 2
   bloomBlurIterations: 1
   lensflares: 0
   hollywoodFlareBlurIterations: 2
@@ -638,6 +639,18 @@ MonoBehaviour:
     type: 3}
   brightPassFilterShader: {fileID: 4800000, guid: 186c4c0d31e314f049595dcbaf4ca129,
     type: 3}
+--- !u!114 &941382690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 941382680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a07a781cad112c75d0008dfa8d76c639, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shader: {fileID: 4800000, guid: b6aa781cad112c75d0008dfa8d76c639, type: 3}
 --- !u!1 &962497417
 GameObject:
   m_ObjectHideFlags: 0
@@ -817,6 +830,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8795121ede0945044800815f3d5f143a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxVolume: .349999994
 --- !u!82 &1450231623
 AudioSource:
   m_ObjectHideFlags: 0

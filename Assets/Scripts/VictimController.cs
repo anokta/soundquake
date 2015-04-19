@@ -25,5 +25,7 @@ public class VictimController : MonoBehaviour
         {
             rigid.AddForce(noiseMaker.GetNoiseForce(transform.position));
         }
+
+        FindObjectOfType<FadeNoise>().SetTargetVolume(0.15f * rigid.velocity.magnitude);
     }
 }

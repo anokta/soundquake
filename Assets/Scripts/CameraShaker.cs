@@ -1,14 +1,15 @@
-﻿using UnityEngine;
+﻿// ----------------------------------------------------------------------
+//   soundquake - Ludum Dare 32 Compo Entry
+//
+//     Copyright 2015 Alper Gungormusler. All rights reserved.
+//
+// -----------------------------------------------------------------------
+
+using UnityEngine;
 using System.Collections;
 
 public class CameraShaker : MonoBehaviour {
-    Camera camera;
-
     float targetRotationAngle = 0.0f;
-
-	void Awake () {
-        camera = Camera.main;	
-	}
 
     void OnEnable()
     {
@@ -28,13 +29,13 @@ public class CameraShaker : MonoBehaviour {
         }
         targetRotationAngle = totalForce;
 
-        camera.transform.rotation = 
-           Quaternion.Slerp(camera.transform.rotation, Quaternion.AngleAxis(targetRotationAngle * Random.Range(-45.0f, 45.0f),
-                    Vector3.forward), Time.deltaTime);
+        Camera.main.transform.rotation =
+           Quaternion.Slerp(Camera.main.transform.rotation, Quaternion.AngleAxis(targetRotationAngle * Random.Range(-60.0f, 60.0f),
+                    Vector3.forward), 2.0f * Time.deltaTime);
 	}
 
     void GameStart()
     {
-        camera.transform.rotation = Quaternion.identity;
+        Camera.main.transform.rotation = Quaternion.identity;
     }
 }

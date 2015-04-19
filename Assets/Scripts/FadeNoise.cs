@@ -10,6 +10,8 @@ using System.Collections;
 
 public class FadeNoise : MonoBehaviour {
 
+    public float maxVolume = 0.35f;
+
     AudioSource audioSource;
     float targetVolume = 0.0f;
 
@@ -40,11 +42,16 @@ public class FadeNoise : MonoBehaviour {
 
     void GameOver()
     {
-        targetVolume = 0.25f;
+        targetVolume = maxVolume;
     }
 
     void GameStart()
     {
         targetVolume = 0.0f;
+    }
+
+    public void SetTargetVolume(float volume)
+    {
+        targetVolume = Mathf.Min(maxVolume, volume);
     }
 }

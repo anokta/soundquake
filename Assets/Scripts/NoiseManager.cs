@@ -29,7 +29,7 @@ public class NoiseManager : MonoBehaviour
         if (!recording)
         {
             // Start recording.
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && FindObjectsOfType<NoiseMaker>().Length < 32)
             {
                 recording = true;
                 startTime = Time.time;
