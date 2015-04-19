@@ -139,9 +139,11 @@ public class GameManager : MonoBehaviour
         // Create borders, so the victim cannot escape! :)
         Transform borderLeft = GameObject.Instantiate(groundPrefab).transform;
         borderLeft.localPosition = new Vector3(left - 0.5f * borderLeft.localScale.x, 0.0f, 0.0f);
+        borderLeft.localScale = new Vector3(borderLeft.localScale.x, 50.0f, 1.0f);
         borderLeft.parent = levelTransform;
         Transform borderRight = GameObject.Instantiate(groundPrefab).transform;
         borderRight.localPosition = new Vector3(right + 0.5f * borderRight.localScale.x, 0.0f, 0.0f);
+        borderRight.localScale = new Vector3(borderRight.localScale.x, 50.0f, 1.0f);
         borderRight.parent = levelTransform;
 
         // Start the level empty.

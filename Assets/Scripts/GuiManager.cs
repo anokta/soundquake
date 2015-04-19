@@ -47,7 +47,15 @@ public class GuiManager : MonoBehaviour
             currentAlphaLevel = Mathf.Lerp(currentAlphaLevel, targetAlphaLevel, 2.0f * Time.deltaTime);
         }
 
+        title.rectTransform.localPosition = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f), 0.0f);
+        click.rectTransform.localPosition = new Vector3(Random.Range(-0.2f, 0.2f), Random.Range(-0.2f, 0.2f), 0.0f);
+        level.rectTransform.localPosition = new Vector3(Random.Range(-0.4f, 0.4f), Random.Range(-0.4f, 0.4f), 0.0f);
+
         Color c;
+
+        c = level.color;
+        c.a = currentAlphaLevel;
+        level.color = c;
 
         c = title.color;
         c.a = currentAlphaMenu;
@@ -61,15 +69,12 @@ public class GuiManager : MonoBehaviour
             {
                 click.fontStyle = FontStyle.Bold;
             }
-            if (Input.GetMouseButtonUp(0)) {
+            if (Input.GetMouseButtonUp(0))
+            {
                 click.enabled = false;
                 GameEventManager.TriggerGameStart();
             }
         }
-
-            c = level.color;
-            c.a = currentAlphaLevel;
-            level.color = c;
     }
 
     void GameMenu()
@@ -87,7 +92,7 @@ public class GuiManager : MonoBehaviour
 
     void GameOver()
     {
-        currentAlphaLevel = 0.25f;
+        currentAlphaLevel = 0.1f;
         targetAlphaLevel = 1.0f;
     }
 }

@@ -13,13 +13,17 @@ public class NoiseMaker : MonoBehaviour
     [HideInInspector]
     public AudioSource audioSource;
 
-    float averageForce = 0.0f;
+    [HideInInspector]
+    public float averageForce;
+    
     float lastForce;
 
     void Awake()
     {
         audioSource = GetComponent<AudioSource>();
-        lastForce = 0.2f;
+        averageForce = 0.0f;
+        lastForce = 0.0f;
+        GetComponent<Renderer>().material.color = Color.red * 0.25f;
     }
 
     void Update()
@@ -27,7 +31,7 @@ public class NoiseMaker : MonoBehaviour
         GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-0.25f, 0.25f), 1.0f, 0.0f) * averageForce * 100);
 
         lastForce = Mathf.Lerp(lastForce, averageForce, Time.deltaTime * 10.0f);
-        GetComponent<Renderer>().material.color = Color.red * Mathf.Max(0.4f, 12.0f * lastForce);
+        GetComponent<Renderer>().material.color = new Color(1.0f, 0.25f, 0.25f) * Mathf.Max(0.1f, 25.0f * lastForce);
     }
 
     void OnAudioFilterRead(float[] data, int length)

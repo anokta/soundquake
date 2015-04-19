@@ -15,7 +15,7 @@ GameObject:
   - 114: {fileID: 11416894}
   m_Layer: 0
   m_Name: Victim
-  m_TagString: Untagged
+  m_TagString: Victim
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -89,6 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09fa8059ff4e8cb459f8c85deab0d3d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigid: {fileID: 0}
 --- !u!135 &13536836
 SphereCollider:
   m_ObjectHideFlags: 1

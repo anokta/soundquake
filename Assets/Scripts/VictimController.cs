@@ -16,7 +16,7 @@ public class VictimController : MonoBehaviour
     void Awake()
     {
         rigid = GetComponent<Rigidbody>();
-        GetComponent<Renderer>().material.color = Color.blue;
+        GetComponent<Renderer>().material.color = Color.white;
     }
 
     void Update()

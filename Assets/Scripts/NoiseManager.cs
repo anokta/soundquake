@@ -42,7 +42,7 @@ public class NoiseManager : MonoBehaviour
             if (Input.GetMouseButtonUp(1))
             {
                 RaycastHit[] hits = Physics.RaycastAll(Camera.main.ScreenPointToRay(Input.mousePosition));
-                if (hits.Length > 0)
+                if (hits.Length > 0 && hits[0].transform.tag == "NoiseMaker")
                 {
                     GameObject.Destroy(hits[0].transform.gameObject);
                 }
